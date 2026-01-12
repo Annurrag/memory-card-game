@@ -1,10 +1,11 @@
 import React from 'react'
-import { Button } from './ui/button'
+
 import { cn } from '@/lib/utils'
-import { Brain, BrainCircuit, Icon } from 'lucide-react'
+import { BrainCircuit, } from 'lucide-react'
 
 const MemoryCard = ({ card, onClick, disabled }) => {
   const {icon : Icon, isFlipped, isMatched}= card;
+
   return (
     <button
       onClick={onClick}
