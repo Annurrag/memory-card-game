@@ -20,6 +20,54 @@ export default function Home() {
   const [isGameWon, setIsGameWon] = useState(false);
   const [isChecking, setIsChecking] = useState(false);
 
+  // backend integration states
+  const [aiReview, setAiReview]=useState("");
+  const [isLoadingReview, setIsLoadingReview]=useState(false);
+
+  const getPerformanceData = ()=>{
+    const efficiency = Number(((gridSize * gridSize) / moves).toFixed(2));
+    return {
+      gridSize,
+      moves,
+      time,
+      efficiency,
+    };
+  }
+
+  const generateAIReview = async()=>{
+    setIsLoadingReview(true);
+
+    try {
+      const res = await fetch("http://localhost:3000/ai/game-review", {
+        method : "POST",
+        headers : {
+          "Content-Type" : "application/json",
+        },
+        body : JSON.stringify(getPerformanceData()),
+      });
+
+      const data = await res.json();
+      setAiReview(data.review)
+      console.log("AI Review:", data.review);
+    } catch (error) {
+      console.error("Error fetching AI review:", error);
+      // setAiReview("Well done! Keep practicing to improve your memory and speed.");
+    
+    }
+    finally{
+      setIsLoadingReview(false);
+    }
+  }
+
+
+  useEffect(()=>{
+    if(isGameWon){
+      generateAIReview();
+    }
+  }, [isGameWon]);
+
+
+
   const startNewGame = useCallback((size) => {
     setGridSize(size);
     setCards(generateCards(size));
@@ -153,6 +201,20 @@ export default function Home() {
                 <p className="text-sm text-muted-foreground">Time</p>
              </div>
           </div>
+
+          {/* AI Review Section */}
+          <div className="mt-4 rounded-lg bg-muted p-4 text-sm">
+      <p className="font-semibold mb-1">Your Feedback Generated</p>
+
+      {isLoadingReview ? (
+        <p className="text-muted-foreground">
+          Analyzing your performance...
+        </p>
+      ) : (
+        <p className="text-foreground">{aiReview}</p>
+      )}
+    </div>
+
           <AlertDialogFooter>
             <AlertDialogAction onClick={() => startNewGame(gridSize)}>Play Again</AlertDialogAction>
           </AlertDialogFooter>
