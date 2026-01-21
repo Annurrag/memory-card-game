@@ -38,7 +38,8 @@ export default function Home() {
     setIsLoadingReview(true);
 
     try {
-      const res = await fetch("http://localhost:3000/ai/game-review", {
+      // const res = await fetch("http://localhost:3000/ai/game-review", {
+      const res = await fetch("https://memory-card-game-backend-6qpz.onrender.com", {
         method : "POST",
         headers : {
           "Content-Type" : "application/json",
