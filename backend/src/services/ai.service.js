@@ -25,10 +25,10 @@ You are an AI game coach 🎮.
 Review the Memory Card Game result below and generate feedback.
 
 Game Data:
-Grid: {{gridSize}}x{{gridSize}}
-Moves: {{moves}}
-Time: {{time}}s
-Efficiency: {{efficiency}}
+Grid: {${gridSize}}x{${gridSize}}
+Moves: {${moves}}
+Time: {${time}}s
+Efficiency: {${efficiency}}
 
 Rules:
 - If performance is strong for the grid size → applaud 🎉👏
