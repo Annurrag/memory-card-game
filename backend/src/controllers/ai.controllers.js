@@ -26,13 +26,4 @@ module.exports.getGameReview = async (req, res)=>{
         })
     }
 
-    // const prompt = req.query.prompt;
-    
-    // if(!prompt){
-    //     return res.status(400).send("Prompt is required");
-    // }
-
-    // const response = await generateReview(prompt);
-
-    // res.send(response);
 }
